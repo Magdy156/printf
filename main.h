@@ -12,7 +12,7 @@
 #define FHASH 8
 #define FSPACE 16
 /**
- * struct fmt - Struct op
+ * struct conv - Struct op
  * @fmt: The format.
  * @fn: The function associated.
  */
@@ -20,7 +20,7 @@ typedef struct conv
 {
 char fmt;
 int (*fn)(va_list, char[], int, int, int, int);
-}conv_t;
+} conv_t;
 #define UNUSED(x) (void)(x)
 #define BUFF_SIZE 1024
 /*MAIN FUNCTION*/
@@ -29,6 +29,7 @@ int handle_print(const char *format, int *i,
 va_list list, char buffer[], int flags, int width, int precision, int size);
 int print_char(va_list types, char buffer[],
 	int flags, int width, int precision, int size);
+char *add_c(int index, char buffer[], char post_c);
 int print_string(va_list types, char buffer[],
 	int flags, int width, int precision, int size);
 int print_percent(va_list types, char buffer[],
@@ -76,3 +77,4 @@ int is_digit(char);
 long int convert_size_number(long int num, int size);
 long int convert_size_unsgnd(unsigned long int num, int size);
 #endif
+

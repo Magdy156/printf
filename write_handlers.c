@@ -10,10 +10,10 @@
  * @length: length modifier.
  * Return: Number of the printed characters.
  */
-int write_number(int is_negative, int ind, char buffer[],
+int write_number(int is_negative, int index, char buffer[],
 	int flags, int width, int precision, int length)
 {
-int size = BUFF_SIZE - ind - 1;
+int size = BUFF_SIZE - index - 1;
 char padd = ' ', ch = 0;
 UNUSED(length);
 if ((FZERO & flags) && !(FMINUS & flags))
@@ -24,7 +24,7 @@ else if (FPLUS & flags)
 ch = '+';
 else if (FSPACE & flags)
 ch = ' ';
-return (write_num(ind, buffer, flags, width, precision,
+return (write_num(index, buffer, flags, width, precision,
 size, padd, ch));
 }
 /**
@@ -73,11 +73,10 @@ return (write(1, &c, 1));
  * @post_c: Extra character
  * Return: Number of printed chars.
  */
-int write_num(int index, char buffer[],
-	int flags, int width, int precision,
-	int length, char padd, char post_c)
+int write_num(int index, char buffer[], int flags, int width,
+	int precision, int length, char padd, char post_c)
 {
-int i, padd_start = 1;
+int i = 1, padd_start = 1;
 if (precision == 0 && index == BUFF_SIZE - 2 && buffer[index] == '0')
 {
 if (width == 0)
@@ -87,34 +86,27 @@ buffer[index] = padd = ' ';
 if (precision > 0 && precision < length)
 padd = ' ';
 while (precision > length)
-{
-buffer[--index] = '0';
-length++;
-}
+buffer[--index] = '0', length++;
 if (post_c != 0)
 length++;
 if (width > length)
 {
-i = 1;
 for (; i < width - length + 1; i++)
 buffer[i] = padd;
 buffer[i] = '\0';
 if (flags & FMINUS && padd == ' ')
 {
-if (post_c)
-buffer[--index] = post_c;
+buffer = add_c(--index, buffer, post_c);
 return (write(1, &buffer[index], length) + write(1, &buffer[1], i - 1));
 }
 else if (!(flags & FMINUS) && padd == ' ')
 {
-if (post_c)
-buffer[--index] = post_c;
+buffer = add_c(--index, buffer, post_c);
 return (write(1, &buffer[1], i - 1) + write(1, &buffer[index], length));
 }
 else if (!(flags & FMINUS) && padd == '0')
 {
-if (post_c)
-buffer[--padd_start] = post_c;
+buffer = add_c(--padd_start, buffer, post_c);
 return (write(1, &buffer[padd_start], i - padd_start) +
 	write(1, &buffer[index], length - (1 - padd_start)));
 }
@@ -222,3 +214,4 @@ return (write(1, &buffer[0], i) + write(1, &buffer[index], length));
 }
 return (write(1, &buffer[index], length));
 }
+
