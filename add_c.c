@@ -6,9 +6,9 @@
  * @post_c: Extra character
  * Return: Buffer
  */
-char *add_c(int index, char buffer[], char post_c)
+char *add_c(int *index, char buffer[], char post_c)
 {
 if (post_c)
-buffer[index] = post_c;
+buffer[--*index] = post_c;
 return (buffer);
 }

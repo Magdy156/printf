@@ -96,17 +96,17 @@ buffer[i] = padd;
 buffer[i] = '\0';
 if (flags & FMINUS && padd == ' ')
 {
-buffer = add_c(--index, buffer, post_c);
+buffer = add_c(&index, buffer, post_c);
 return (write(1, &buffer[index], length) + write(1, &buffer[1], i - 1));
 }
 else if (!(flags & FMINUS) && padd == ' ')
 {
-buffer = add_c(--index, buffer, post_c);
+buffer = add_c(&index, buffer, post_c);
 return (write(1, &buffer[1], i - 1) + write(1, &buffer[index], length));
 }
 else if (!(flags & FMINUS) && padd == '0')
 {
-buffer = add_c(--padd_start, buffer, post_c);
+buffer = add_c(&padd_start, buffer, post_c);
 return (write(1, &buffer[padd_start], i - padd_start) +
 	write(1, &buffer[index], length - (1 - padd_start)));
 }

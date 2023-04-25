@@ -29,7 +29,7 @@ int handle_print(const char *format, int *i,
 va_list list, char buffer[], int flags, int width, int precision, int size);
 int print_char(va_list types, char buffer[],
 	int flags, int width, int precision, int size);
-char *add_c(int index, char buffer[], char post_c);
+char *add_c(int *index, char buffer[], char post_c);
 int print_string(va_list types, char buffer[],
 	int flags, int width, int precision, int size);
 int print_percent(va_list types, char buffer[],
